@@ -10,6 +10,8 @@ use App\Models\Shipping;
 use App\Repositories\Interfaces\ShippingInterface;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -40,7 +42,7 @@ class ShippingResource extends Resource
             ->columns(ShippingTable::table())
             ->filters([
                 SelectFilter::make('shipping_status')->options(Shipping::STATUS),
-                Filter::make('shipping_date')
+                Filter::make('created_at')
                     ->form([
                         DatePicker::make('from'),
                         DatePicker::make('until')->default(now()),
@@ -49,15 +51,40 @@ class ShippingResource extends Resource
                         return $query
                             ->when(
                                 $data['from'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('shipping_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['until'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('shipping_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     })
             ])
             ->actions([
+                Tables\Actions\Action::make('road')
+                    ->fillForm(fn(Shipping $record): array => [
+                        'roads' => $record->loadMissing('road')->road
+                            ->map(fn($item) => [
+                                'id' => $item->id ?? null, // Simpan ID untuk update jika ada
+                                'information' => $item->information ?? '',
+                            ])->toArray(),
+                    ])
+                    ->form([
+                        Repeater::make('roads')
+                            ->schema([
+                                TextInput::make('information')
+                                    ->label('Informasi Pengiriman')
+                                    ->nullable(),
+                            ])
+                            ->columns(1),
+                    ])
+                    ->action(function (array $data, Shipping $record) {
+                        foreach ($data['roads'] as $roadData) {
+                            $record->road()->updateOrCreate(
+                                ['id' => $roadData['id'] ?? null], // Jika ID ada, update; jika tidak, create
+                                ['information' => $roadData['information'] ?? '']
+                            );
+                        }
+                    }),
                 Tables\Actions\EditAction::make()
                     ->using(function (Model $record, array $data) use ($proses): Model {
                         return $proses->update($record->id, $data);

@@ -51,13 +51,11 @@ class ShippingRepository implements ShippingInterface
     {
         return auth()->user()->type === 'admin'
             ? $this->model->query()
-            : $this->model->query()->whereHas('order', function (Builder $q) {
-                $q->whereHas('item', function (Builder $query) {
-                    $query->whereHas('products', function (Builder $product) {
-                        $product->whereHas('seller', function (Builder $seller) {
-                            $seller->whereHas('user', function (Builder $user) {
-                                $user->where('id', auth()->id());
-                            });
+            : $this->model->query()->whereHas('orderItem', function (Builder $q) {
+                $q->whereHas('products', function (Builder $product) {
+                    $product->whereHas('seller', function (Builder $seller) {
+                        $seller->whereHas('user', function (Builder $user) {
+                            $user->where('id', auth()->id());
                         });
                     });
                 });

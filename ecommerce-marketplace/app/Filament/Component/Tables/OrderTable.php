@@ -1,6 +1,7 @@
 <?php
 namespace App\Filament\Component\Tables;
 
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class OrderTable
@@ -19,15 +20,14 @@ class OrderTable
             TextColumn::make('total_price')
                 ->money('IDR')
                 ->sortable(),
-            TextColumn::make('status')
-                ->badge()
-                ->color(fn(string $state): string => match ($state) {
-                    'pending' => 'gray',
-                    'paid' => 'info',
-                    'shipped' => 'warning',
-                    'completed' => 'success',
-                    'cancelled' => 'danger',
-                }),
+            SelectColumn::make('status')
+                ->options([
+                    'pending' => 'pending',
+                    'paid' => 'paid',
+                    'shipped' => 'shipped',
+                    'completed' => 'completed',
+                    'cancelled' => 'cancelled',
+                ]),
             TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()

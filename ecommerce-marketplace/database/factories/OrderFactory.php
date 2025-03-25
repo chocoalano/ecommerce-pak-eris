@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -14,10 +13,12 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            'buyer_id' => User::factory(),
-            'payment_id' => Payment::factory(),
-            'total_price' => $this->faker->randomFloat(2, 50, 1000),
-            'status' => $this->faker->randomElement(['pending', 'paid', 'shipped', 'completed', 'cancelled']),
+            'buyer_id' => User::factory(), // Menghubungkan dengan User
+            'payment_id' => null, // Akan diisi di seeder
+            'total_price' => $this->faker->randomFloat(2, 20, 500),
+            'status' => 'pending',
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,12 +27,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_picture',
         'ewallet_balance',
         'activation',
+        'full_address',
+        'raja_ongkir_city_id',
+        'raja_ongkir_province_id',
     ];
 
     const TYPE = [
         'buyer' => 'Buyer',
         'seller' => 'Seller',
-        'admin' => 'Admin'
+        // 'admin' => 'Admin'
     ];
 
     /**
@@ -78,10 +80,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function cart()
     {
         return $this->hasOne(Cart::class, 'buyer_id');
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class, 'buyer_id');
     }
 }

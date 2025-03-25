@@ -4,40 +4,31 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserFactory extends Factory
 {
     protected $model = User::class;
 
-    public function definition()
+    /**
+     * Definisi default model untuk factory.
+     */
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => $this->faker->optional()->dateTime(),
-            'password' => bcrypt('123456789'), // Default password
-            'phone_number' => $this->faker->optional()->phoneNumber(),
-            'type' => $this->faker->randomElement(['buyer', 'seller']),
-            'profile_picture' => $this->faker->optional()->imageUrl(),
-            'ewallet_balance' => $this->faker->randomFloat(2, 0, 10000), // Balance up to 10k
-            'activation' => $this->faker->boolean(),
-            'remember_token' => Str::random(10),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password'), // Enkripsi password
+            'phone_number' => $this->faker->numerify('08##########'), // Nomor HP acak
+            'type' => $this->faker->randomElement(array_keys(User::TYPE)), // Pilih tipe user acak
+            'profile_picture' => $this->faker->imageUrl(200, 200, 'people', true, 'profile'), // Gambar random
+            'ewallet_balance' => $this->faker->randomFloat(2, 0, 1000000), // Saldo e-wallet acak
+            'activation' => $this->faker->boolean(80), // 80% kemungkinan aktif
+            'full_address' => $this->faker->address,
+            'raja_ongkir_city_id' => $this->faker->numberBetween(1, 500), // ID Kota acak
+            'raja_ongkir_province_id' => $this->faker->numberBetween(1, 34), // ID Provinsi acak
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
-    }
-
-    public function buyer()
-    {
-        return $this->state(fn () => ['type' => 'buyer']);
-    }
-
-    public function seller()
-    {
-        return $this->state(fn () => ['type' => 'seller']);
-    }
-
-    public function admin()
-    {
-        return $this->state(fn () => ['type' => 'admin']);
     }
 }

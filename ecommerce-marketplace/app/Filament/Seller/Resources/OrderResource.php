@@ -8,9 +8,12 @@ use App\Filament\Component\Forms\OrderForm;
 use App\Filament\Component\Tables\OrderTable;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Shipping;
 use App\Repositories\Interfaces\OrderPatternInterface;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -60,6 +63,52 @@ class OrderResource extends Resource
                     })
             ])
             ->actions([
+                Tables\Actions\Action::make('shipping')
+                    ->slideOver()
+                    ->modalWidth('7xl')
+                    ->fillForm(fn(Order $record): array => [
+                        'shippings' => $record->item->map(fn($item) => [
+                            'order_item_id' => $item->id,
+                            'product_id' => $item->product_id,
+                            'tracking_number' => $item->shipping?->tracking_number ?? null,
+                            'shipping_status' => $record->status,
+                            'notes' => $item->shipping?->notes ?? null,
+                        ])->toArray()
+                    ])
+                    ->form([
+                        Repeater::make('shippings')
+                            ->schema([
+                                TextInput::make('order_item_id')->hidden(),
+                                Select::make('product_id')
+                                    ->label('Produk')
+                                    ->options(Product::query()->pluck('name', 'id')->toArray())
+                                    ->required(),
+                                TextInput::make('tracking_number')->label('No Resi')->required(),
+                                Select::make('shipping_status')
+                                    ->label('Status Pengiriman')
+                                    ->options([
+                                        'pending' => 'Pending',
+                                        'shipped' => 'Dikirim',
+                                        'delivered' => 'Diterima',
+                                        'canceled' => 'Dibatalkan',
+                                    ])
+                                    ->required(),
+                                TextInput::make('notes')->label('Catatan')->nullable(),
+                            ])
+                            ->columns(4),
+                    ])
+                    ->action(function (array $data) {
+                        foreach ($data['shippings'] as $k) {
+                            Shipping::updateOrCreate([
+                                'order_item_id' => $k['order_item_id'],
+                            ], [
+                                'order_item_id' => $k['order_item_id'],
+                                'tracking_number' => $k['tracking_number'],
+                                'shipping_status' => $k['shipping_status'],
+                                'notes' => $k['notes'],
+                            ]);
+                        }
+                    }),
                 Tables\Actions\EditAction::make()
                     ->slideOver()
                     ->modalWidth('7xl')

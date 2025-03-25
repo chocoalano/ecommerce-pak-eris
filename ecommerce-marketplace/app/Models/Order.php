@@ -33,7 +33,7 @@ class Order extends Model
     }
     public function payment()
     {
-        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+        return $this->belongsTo(Payment::class, 'id', 'order_id');
     }
     public function shipping()
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30994c9d455bf4eee5492cc265a896a3",
+    "content-hash": "deff4dab9a0f8a6463ef071770e5c055",
     "packages": [
         {
             "name": "afatmustafa/blade-hugeicons",
@@ -2159,70 +2159,6 @@
             "time": "2023-12-03T19:50:20+00:00"
         },
         {
-            "name": "kavist/rajaongkir",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kavist/rajaongkir.git",
-                "reference": "c1ab72000d05b1cb6b0a1a1364d6200b78976377"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kavist/rajaongkir/zipball/c1ab72000d05b1cb6b0a1a1364d6200b78976377",
-                "reference": "c1ab72000d05b1cb6b0a1a1364d6200b78976377",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "codedungeon/phpunit-result-printer": "^0.26.2",
-                "fzaninotto/faker": "^1.8",
-                "mockery/mockery": "^1.2",
-                "orchestra/testbench": "^4.1",
-                "phpunit/phpunit": "^8.0",
-                "spatie/phpunit-watcher": "^1.12"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "RajaOngkir": "Kavist\\RajaOngkir\\Facades\\RajaOngkir"
-                    },
-                    "providers": [
-                        "Kavist\\RajaOngkir\\Providers\\LaravelServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kavist\\RajaOngkir\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ian Mustafa",
-                    "email": "mail@ianmustafa.com",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Klien API PHP untuk RajaOngkir",
-            "homepage": "https://github.com/kavist/rajaongkir",
-            "keywords": [
-                "laravel",
-                "rajaongkir"
-            ],
-            "support": {
-                "issues": "https://github.com/kavist/rajaongkir/issues",
-                "source": "https://github.com/kavist/rajaongkir/tree/v1.1.0"
-            },
-            "time": "2019-10-11T01:21:56+00:00"
-        },
-        {
             "name": "kirschbaum-development/eloquent-power-joins",
             "version": "4.0.1",
             "source": {
@@ -3466,6 +3402,62 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.9.0"
             },
             "time": "2024-03-31T07:05:07+00:00"
+        },
+        {
+            "name": "midtrans/midtrans-php",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Midtrans/midtrans-php.git",
+                "reference": "737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6",
+                "reference": "737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-openssl": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7.*",
+                "psy/psysh": "0.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Midtrans\\": "Midtrans/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andri Setiawan",
+                    "email": "andri.setiawan@veritrans.co.id"
+                },
+                {
+                    "name": "Alvin Litani",
+                    "email": "alvin.litani@veritrans.co.id"
+                },
+                {
+                    "name": "Ismail Faruqi",
+                    "email": "ismail.faruqi@veritrans.co.id"
+                }
+            ],
+            "description": "PHP Wrapper for Midtrans Payment API.",
+            "homepage": "https://midtrans.com",
+            "support": {
+                "issues": "https://github.com/Midtrans/midtrans-php/issues",
+                "source": "https://github.com/Midtrans/midtrans-php/tree/v2.6.1"
+            },
+            "time": "2024-10-16T08:55:12+00:00"
         },
         {
             "name": "mokhosh/filament-rating",

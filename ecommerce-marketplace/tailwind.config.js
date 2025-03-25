@@ -20,6 +20,11 @@ export default {
                 phospor: "Phosphor",
             },
         },
+        container: {
+            center: true,
+        },
     },
-    plugins: [],
+    plugins: [
+        require('flowbite/plugin')
+    ],
 };

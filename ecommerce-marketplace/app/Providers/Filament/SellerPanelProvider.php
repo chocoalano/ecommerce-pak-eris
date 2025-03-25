@@ -33,7 +33,12 @@ class SellerPanelProvider extends PanelProvider
             ->id('seller')
             ->path('seller')
             ->colors([
-                'primary' => Color::Amber,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => '#03AC0E',
+                'success' => Color::Sky,
+                'warning' => Color::Orange,
             ])
             ->login()
             ->registration(Registration::class)

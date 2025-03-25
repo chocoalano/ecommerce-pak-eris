@@ -23,9 +23,11 @@ class ProductForm
                 ->searchable()
                 ->default(Seller::where('user_id', auth()->id())->first()?->id ?? null)
                 ->visible(fn(): bool => auth()->user()->type === 'admin' ? true : false)
+                ->preload()
                 ->required(),
             Select::make('category_id')
                 ->relationship('category', 'name')
+                ->preload()
                 ->searchable()
                 ->required(),
             TextInput::make('name')
@@ -58,6 +60,10 @@ class ProductForm
                     'undo',
                 ])
                 ->required()
+                ->columnSpan(2),
+            FileUpload::make('primary_image')
+                ->image()
+                ->directory('product')
                 ->columnSpan(2),
             FileUpload::make('image')
                 ->image()

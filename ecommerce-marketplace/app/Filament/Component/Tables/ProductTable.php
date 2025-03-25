@@ -26,7 +26,7 @@ class ProductTable
             TextColumn::make('stock')
                 ->numeric()
                 ->sortable(),
-            ImageColumn::make('images.image'),
+            ImageColumn::make('primary_image'),
             RatingColumn::make('rating')
                 ->sortable(),
             TextColumn::make('status')

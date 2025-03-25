@@ -20,8 +20,6 @@ class Product extends Model
         'weight',
         'rating',
         'status',
-        'type',
-        'brand',
         'payment_availablelity',
         'promotion_set',
         'promotion_get',
@@ -38,12 +36,6 @@ class Product extends Model
         'e-wallet' => 'E-wallet',
         'cod' => 'Cash on delivery'
     ];
-    const TYPE = [
-        'electronic' => 'Elektronik',
-        'grocery' => 'Makanan & Minuman',
-        'fashion' => 'Pakaian',
-        'property' => 'Properti',
-    ];
 
     public function seller()
     {
@@ -52,27 +44,14 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class, 'product_category_links', 'category_id', 'product_id');
-    }
-    public function subcategory()
-    {
-        return $this->belongsToMany(Subcategory::class, 'product_subcategory_links', 'subcategory_id', 'product_id');
-    }
-    public function color()
-    {
-        return $this->belongsToMany(Color::class, 'product_color', 'color_id', 'product_id');
+        return $this->belongsToMany(Category::class, 'category_product');
     }
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_items', 'order_id', 'product_id');
     }
-
-    public function reviews()
+    public function carts()
     {
-        return $this->morphMany(Review::class, 'related');
-    }
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'related');
+        return $this->belongsToMany(Cart::class);
     }
 }

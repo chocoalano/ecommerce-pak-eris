@@ -6,21 +6,17 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['buyer_id', 'total_price'];
+    protected $fillable = ['buyer_id', 'total_price', 'product_id', 'qty', 'ispay'];
 
-    public function item()
-    {
-        return $this->hasMany(CartItem::class, 'cart_id', 'id');
-    }
-
+    protected $casts = [
+        'ispay'=> 'boolean',
+    ];
     public function buyer()
     {
         return $this->belongsTo(User::class, 'buyer_id');
     }
-
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany(Product::class, 'cart_items')
-            ->withPivot('qty');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

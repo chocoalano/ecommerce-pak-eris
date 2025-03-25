@@ -13,6 +13,7 @@ class Payment extends Model
         'payment_status',
         'payment_date',
         'amount_paid',
+        'image',
     ];
 
     const PAYMENT_METHOD = [
@@ -21,10 +22,10 @@ class Payment extends Model
         'e-wallet' => 'E-Wallet',
         'cod' => 'Cash On Delivery'
     ];
-    const PAYMENT_STATUS = ['pending' => 'Pending', 'success' => 'Success', 'failed' => 'Failed'];
+    const PAYMENT_STATUS = ['pending' => 'Pending', 'success' => 'Success', 'failed' => 'Failed', 'completed' => 'Completed'];
 
     public function order()
     {
-        return $this->hasOne(Order::class, 'payment_id', 'id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 }
